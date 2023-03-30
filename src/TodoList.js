@@ -1,9 +1,27 @@
 import React, { Component } from 'react'
 
 class TodoList extends Component {
+  deleteItem = key => {
+    const filteredItems = this.state.items.filter(item => {
+      return item.key !== key
+    })
+    this.setState({
+      items: filteredItems,
+    })
+  }
+
+  editItem = key => {
+    const selectedItem = this.state.items.find(item => item.key === key)
+    this.setState({
+      currentItem: selectedItem,
+    })
+    this.props.inputElement.current.focus()
+  }
+
   componentDidUpdate() {
     this.props.inputElement.current.focus()
   }
+
   render() {
     return (
       <div className="todoListMain">
@@ -23,23 +41,5 @@ class TodoList extends Component {
     )
   }
 }
-deleteItem = key => {
-  const filteredItems = this.state.items.filter(item => {
-    return item.key !== key
-  })
-  this.setState({
-    items: filteredItems,
-  })
-}
-
-
-editItem = key => {
-  const selectedItem = this.state.items.find(item => item.key === key)
-  this.setState({
-    currentItem: selectedItem,
-  })
-  this.props.inputElement.current.focus()
-}
-
 
 export default TodoList;
